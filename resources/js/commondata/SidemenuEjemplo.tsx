@@ -1,0 +1,110 @@
+export const MENUITEMS = [
+    {
+        menutitle: "Menu",
+        rol: [1],
+        Items: [
+            {
+                path: "/dashboard",
+                icon: "fe fe-home",
+                type: "link",
+                active: false,
+                selected: false,
+                title: "Dashboard",
+                rol: [1],
+            },
+        ],
+    },
+    {
+        menutitle: "MISC PAGES",
+        rol: [1],
+        id: 6,
+        Items: [
+            {
+                path: "/dashboard",
+                icon: "fe fe-users",
+                type: "sub",
+                active: false,
+                selected: false,
+                title: "ErrorPages",
+                rol: [1],
+                children: [
+                    {
+                        path: "/dashboard",
+                        type: "link",
+                        active: false,
+                        selected: false,
+                        title: "400",
+                        rol: [1],
+                    },
+                    {
+                        path: "/dashboard",
+                        type: "link",
+                        active: false,
+                        selected: false,
+                        title: "400",
+                        rol: [1],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        menutitle: "SUB MENUS",
+        rol: [1],
+        id: 5,
+        Items: [
+            {
+                path: "/dashboard",
+                icon: "fe fe-align-center",
+                type: "sub",
+                active: false,
+                selected: false,
+                title: "Submenus",
+                rol: [1],
+                children: [
+                    {
+                        type: "sub",
+                        active: false,
+                        selected: false,
+                        title: "Submenu1",
+                        rol: [1],
+                        children: [
+                            {
+                                path: "/dashboard",
+                                type: "link",
+                                active: false,
+                                selected: false,
+                                title: "Submenu1.1",
+                                rol: [1],
+                            },
+                            {
+                                path: "/dashboard",
+                                type: "link",
+                                active: false,
+                                selected: false,
+                                title: "Submenu1.2",
+                                rol: [1],
+                            },
+                            {
+                                path: "/dashboard",
+                                type: "link",
+                                active: false,
+                                selected: false,
+                                title: "Submenu1.3",
+                                rol: [1],
+                            },
+                        ],
+                    },
+                    {
+                        path: "/dashboard",
+                        type: "link",
+                        active: false,
+                        selected: false,
+                        title: "Submenus2",
+                        rol: [1],
+                    },
+                ],
+            },
+        ],
+    },
+];

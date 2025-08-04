@@ -1,0 +1,59 @@
+export const MENUITEMS = [
+    {
+        menutitle: "Oficios",
+        rol: [1, 2, 3, 4, 5],
+        Items: [
+            {
+                path: "/oficios/listado-oficio",
+                icon: "fa fa-folder",
+                type: "link",
+                active: false,
+                selected: false,
+                title: "Recepción",
+                rol: [1, 2],
+            },
+            {
+                path: "/oficios/mis-oficios",
+                icon: "fa fa-folder",
+                type: "link",
+                active: false,
+                selected: false,
+                title: "Mis oficios",
+                rol: [1, 3, 4],
+            },
+            {
+                path: "/oficios/respuestas",
+                icon: "fa fa-folder",
+                type: "link",
+                active: false,
+                selected: false,
+                title: "Oficios",
+                rol: [1, 5],
+            },
+            {
+                path: "/oficios/nuevo-oficio/0",
+                icon: "fa fa-file-pdf-o",
+                type: "link",
+                active: false,
+                selected: false,
+                title: "Nuevo oficio",
+                rol: [1, 2, 3, 4, 5],
+            },
+        ],
+    },
+    {
+        menutitle: "Catalogos",
+        rol: [1, 3, 4, 5],
+        Items: [
+            {
+                path: "/catalogos/destinatarios-externos",
+                icon: "fa fa-group",
+                type: "link",
+                active: false,
+                selected: false,
+                title: "Destinatarios Externos",
+                rol: [1, 3, 4, 5],
+            },
+        ],
+    },
+];
