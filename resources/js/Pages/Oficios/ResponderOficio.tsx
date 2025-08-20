@@ -1,7 +1,18 @@
 import AppLayout from "../../Layouts/app";
 import { Head, router, useForm, usePage } from "@inertiajs/react";
 import { FormEventHandler, Fragment, useEffect, useRef, useState } from "react";
-import { Card, Row, Col, Form } from "react-bootstrap";
+import {
+    Card,
+    Row,
+    Col,
+    Form,
+    Modal,
+    ModalHeader,
+    ModalTitle,
+    ModalBody,
+    ModalFooter,
+    Button,
+} from "react-bootstrap";
 import PageHeader from "../../Layouts/layoutcomponents/pageHeader";
 import TituloCard from "@/types/TituloCard";
 import { SelectInstance } from "react-select";
@@ -12,7 +23,7 @@ import Copias from "./Copias";
 import { Copia, Respuesta } from "./Interfaces/Copia";
 import toast from "react-hot-toast";
 import InputError from "../InputError";
-import { getFullUrl, sunEditorLangEs } from "../../types/url";
+import { sunEditorLangEs } from "../../types/url";
 import Swal from "sweetalert2";
 import VerPdf from "@/types/VerPdf";
 import { FilePond, registerPlugin } from "react-filepond";
@@ -22,6 +33,13 @@ import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import "filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css";
 registerPlugin(FilePondPluginFilePoster, FilePondPluginImagePreview);
+import DataTable from "datatables.net-react";
+import DT from "datatables.net-bs5";
+// @ts-ignore
+import language from "datatables.net-plugins/i18n/es-MX.mjs";
+import "../../../css/suneditor.css";
+
+DataTable.use(DT);
 
 export default function Recepcion({
     status,
@@ -66,6 +84,8 @@ export default function Recepcion({
     );
     const [destinatarios, setDestinatarios] = useState<any[]>([]);
     const [showDos, setShowDos] = useState(false);
+    const [show3, setShow3] = useState(false);
+    const [archivos, setArchivos] = useState([]);
 
     useEffect(() => {
         if (
@@ -102,7 +122,7 @@ export default function Recepcion({
         }
     }, [error]);
 
-    const htmlWithTableImages = `<div>Por este medio le envío un cordial saludo, asimismo solicito de su apoyo</div>`;
+    const htmlWithTableImages = `<div>Por este medio le envío un cordial saludo, asimismo </div>`;
 
     const {
         data,
@@ -121,6 +141,7 @@ export default function Recepcion({
         dependenciaDos: respuesta?.dependencia,
         dirigido_aDos: respuesta?.id_directorio,
         asunto: respuesta?.respuesta || htmlWithTableImages,
+        comentario: (respuesta as any)?.comentario,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -146,9 +167,10 @@ export default function Recepcion({
         }
         setData("dirigido_aDos", value);
         const response = await fetch(
-            getFullUrl(
-                `/peticiones/get/detalle-directorio/${value}/${data.destinatarioDos}`
-            ),
+            route("getDetalleDirectorio", {
+                id: value,
+                tipo: data.destinatarioDos,
+            }),
             {
                 method: "get",
             }
@@ -186,7 +208,7 @@ export default function Recepcion({
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                router.put(getFullUrl(`/oficios/area/responde/${oficio.id}`));
+                router.put(route("respondeOFicio", { id: oficio.id }));
             }
         });
     };
@@ -219,6 +241,36 @@ export default function Recepcion({
         return "";
     }
 
+    const verArchivosAdjuntos = async () => {
+        const response = await fetch(
+            route("oficios.getArchivosAdjuntos", {
+                id: oficio.id,
+                tipo: "id_oficio_inicial",
+            }),
+            {
+                method: "get",
+            }
+        );
+
+        const datos = await response.json();
+
+        setArchivos(datos.data);
+        setShow3(true);
+    };
+
+    const verArchivo = (url: string, tipo: number, extension: string) => {
+        if (tipo == 1) {
+            setVariables({
+                ...variables,
+                urlPdf: url,
+                extension: extension,
+            });
+            setShowDos(true);
+        } else {
+            window.open(url, "_blank");
+        }
+    };
+
     return (
         <AppLayout>
             <Head>
@@ -249,13 +301,38 @@ export default function Recepcion({
                                         obligatorio={true}
                                     />
                                 </Card.Title>
-                                <button
-                                    className="btn btn-success mb-3"
-                                    onClick={() => setShow(true)}
-                                    style={{ margin: "0 !important" }}
-                                >
-                                    Ver pdf
-                                </button>
+                                <div>
+                                    <button
+                                        className="btn btn-warning btn-sm mb-3 mr-1"
+                                        onClick={() => verArchivosAdjuntos()}
+                                        style={{ margin: "0 !important" }}
+                                    >
+                                        Archivos Adjuntos
+                                    </button>
+
+                                    <button
+                                        className="btn btn-danger btn-sm mb-3 mr-1"
+                                        onClick={() => {
+                                            setVariables({
+                                                ...variables,
+                                                urlPdf: oficio.archivo,
+                                                extension: "pdf",
+                                            }),
+                                                setShowDos(true);
+                                        }}
+                                        style={{ margin: "0 !important" }}
+                                    >
+                                        Ver oficio inicial
+                                    </button>
+
+                                    <button
+                                        className="btn btn-success btn-sm mb-3"
+                                        onClick={() => setShow(true)}
+                                        style={{ margin: "0 !important" }}
+                                    >
+                                        Vista Previa
+                                    </button>
+                                </div>
                             </Card.Header>
                             <Card.Body>
                                 <Row>
@@ -474,7 +551,7 @@ export default function Recepcion({
                                                 respuesta del oficio
                                             </h4>
                                         </Col>
-                                        <Col xs={12}>
+                                        <Col xs={12} className="mb-5">
                                             <SunEditor
                                                 setContents={data.asunto}
                                                 onChange={(value) => {
@@ -485,8 +562,15 @@ export default function Recepcion({
                                                     lang: sunEditorLangEs,
                                                     buttonList: [
                                                         ["undo", "redo"],
-                                                        ["font", "fontSize"],
-                                                        ["blockquote"],
+                                                        [
+                                                            "font",
+                                                            "fontSize",
+                                                            "formatBlock",
+                                                        ],
+                                                        [
+                                                            "paragraphStyle",
+                                                            "blockquote",
+                                                        ],
                                                         [
                                                             "bold",
                                                             "underline",
@@ -499,28 +583,35 @@ export default function Recepcion({
                                                             "fontColor",
                                                             "hiliteColor",
                                                         ],
+                                                        ["outdent", "indent"],
                                                         [
                                                             "align",
+                                                            "horizontalRule",
                                                             "list",
                                                             "lineHeight",
                                                         ],
-                                                        ["outdent", "indent"],
-                                                        [
-                                                            "table",
-                                                            "horizontalRule",
-                                                        ],
+                                                        ["table", "image"],
+                                                        ["fullScreen"],
+                                                        ["removeFormat"],
                                                     ],
-                                                    font: ["SourceSansPro"],
-                                                    fontSize: [12],
+
+                                                    font: [
+                                                        "SourceSansPro",
+                                                        "Arial",
+                                                        "Courier New",
+                                                        "Times New Roman",
+                                                    ],
+                                                    fontSize: [
+                                                        8, 9, 10, 11, 12, 14,
+                                                        16, 18, 20, 24, 28, 32,
+                                                    ],
                                                     defaultTag: "div",
                                                     minHeight: "300px",
                                                     showPathLabel: false,
                                                     attributesWhitelist: {
-                                                        all: "style",
-                                                        table: "cellpadding|width|cellspacing|height|style",
-                                                        tr: "valign|style",
-                                                        td: "styleinsert|height|style",
-                                                        img: "title|alt|src|style",
+                                                        table: "style|width|height|cellpadding|cellspacing|border",
+                                                        tr: "style|height|valign",
+                                                        td: "style|width|height|colspan|rowspan",
                                                     },
                                                 }}
                                             />
@@ -528,6 +619,25 @@ export default function Recepcion({
                                                 className="mt-1"
                                                 message={errors.asunto}
                                             />
+                                        </Col>
+
+                                        <Col xs={12} className="mb-5">
+                                            <Form.Label>
+                                                Ingrese un comentario referente
+                                                a la respuesta del oficio
+                                            </Form.Label>
+                                            <textarea
+                                                className="form-control"
+                                                value={data.comentario}
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "comentario",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                maxLength={1000}
+                                                rows={3}
+                                            ></textarea>
                                         </Col>
 
                                         <Col
@@ -567,8 +677,6 @@ export default function Recepcion({
                                                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                                                 ]}
                                                 onactivatefile={(fileItem) => {
-                                                    // Aquí va tu función personalizada
-                                                    // Por ejemplo, abrir el archivo en una nueva pestaña:
                                                     const url =
                                                         fileItem.getMetadata(
                                                             "url"
@@ -577,7 +685,6 @@ export default function Recepcion({
                                                         fileItem.getMetadata(
                                                             "extension"
                                                         );
-                                                    console.log(extension);
                                                     if (url) {
                                                         if (
                                                             extension ==
@@ -606,8 +713,11 @@ export default function Recepcion({
                                                 filePosterMaxHeight={150}
                                                 server={{
                                                     process: {
-                                                        url: getFullUrl(
-                                                            `/oficios/subir/archivos/${oficio.id}`
+                                                        url: route(
+                                                            "uploadFilesOficio",
+                                                            {
+                                                                id: oficio.id,
+                                                            }
                                                         ),
                                                         method: "POST",
                                                         withCredentials: true,
@@ -616,13 +726,9 @@ export default function Recepcion({
                                                                 getCookie(
                                                                     "XSRF-TOKEN"
                                                                 ),
-                                                            Accept: "application/json", // <-- fuerza JSON
+                                                            Accept: "application/json",
                                                         },
                                                         onload: (response) => {
-                                                            console.log(
-                                                                response
-                                                            );
-                                                            // FilePond espera que el backend regrese un id (filename)
                                                             return JSON.parse(
                                                                 response
                                                             ).id;
@@ -631,12 +737,10 @@ export default function Recepcion({
                                                             let msg =
                                                                 "Error al subir archivo";
                                                             try {
-                                                                // Si la respuesta es JSON de Laravel
                                                                 const res =
                                                                     JSON.parse(
                                                                         response
                                                                     );
-                                                                // Laravel regresa { errors: { file: [ "El archivo debe ser un archivo de tipo: pdf." ] } }
                                                                 if (
                                                                     res.errors &&
                                                                     res.errors
@@ -658,12 +762,12 @@ export default function Recepcion({
                                                                 }
                                                             } catch {}
                                                             toast.error(msg);
-                                                            return msg; // FilePond mostrará este mensaje
+                                                            return msg;
                                                         },
                                                     },
                                                     revert: {
-                                                        url: getFullUrl(
-                                                            "/oficios/elimina/archivo"
+                                                        url: route(
+                                                            "deleteFileOficio"
                                                         ),
                                                         method: "DELETE",
                                                         withCredentials: true,
@@ -700,11 +804,9 @@ export default function Recepcion({
                                                         load,
                                                         error
                                                     ) => {
-                                                        console.log(source);
-                                                        // Función para eliminar archivos que ya estaban en el servidor
                                                         fetch(
-                                                            getFullUrl(
-                                                                "/oficios/elimina/archivo"
+                                                            route(
+                                                                "deleteFileOficio"
                                                             ),
                                                             {
                                                                 method: "DELETE",
@@ -716,15 +818,11 @@ export default function Recepcion({
                                                                             "XSRF-TOKEN"
                                                                         ),
                                                                 },
-                                                                body: source, // El ID del archivo como texto plano (raw body)
+                                                                body: source,
                                                             }
                                                         )
                                                             .then(
                                                                 (response) => {
-                                                                    console.log(
-                                                                        "Respuesta del servidor:",
-                                                                        response
-                                                                    );
                                                                     if (
                                                                         response.ok
                                                                     ) {
@@ -754,10 +852,6 @@ export default function Recepcion({
                                                                 }
                                                             )
                                                             .catch((err) => {
-                                                                console.error(
-                                                                    "Error en petición de eliminación:",
-                                                                    err
-                                                                );
                                                                 toast.error(
                                                                     "Error al eliminar archivo"
                                                                 );
@@ -783,7 +877,6 @@ export default function Recepcion({
                                                     error,
                                                     fileItem
                                                 ) => {
-                                                    console.log(fileItem);
                                                     if (
                                                         fileItem.origin === 1 &&
                                                         fileItem.getMetadata(
@@ -859,6 +952,89 @@ export default function Recepcion({
                     tipo={variables.extension}
                     setShow={setShowDos}
                 />
+
+                <Modal size="xl" show={show3} onHide={() => setShow3(false)}>
+                    <ModalHeader>
+                        <ModalTitle as="h5">
+                            Archivos adjuntos del oficio
+                        </ModalTitle>
+                    </ModalHeader>
+                    <form onSubmit={submit}>
+                        <ModalBody>
+                            <Row>
+                                <Col xs={12}>
+                                    <DataTable
+                                        data={archivos}
+                                        options={{
+                                            language,
+                                            autoWidth: false,
+                                        }}
+                                        columns={[
+                                            {
+                                                data: "nombre",
+                                                title: "Archivo",
+                                            },
+
+                                            {
+                                                data: "id",
+                                                title: "Ver",
+                                            },
+                                        ]}
+                                        className="display table-bordered  border-bottom ancho100"
+                                        slots={{
+                                            1: (data: any, row: any) => (
+                                                <div className="text-center">
+                                                    <Button
+                                                        className="btn-icon ml-1"
+                                                        variant="danger"
+                                                        title="Ver archivo"
+                                                        onClick={() =>
+                                                            verArchivo(
+                                                                row.url,
+                                                                row.tipo,
+                                                                row.extension
+                                                            )
+                                                        }
+                                                    >
+                                                        <i className="fa fa-eye"></i>
+                                                    </Button>
+                                                </div>
+                                            ),
+                                        }}
+                                    ></DataTable>
+                                </Col>
+                                <Col
+                                    xs={12}
+                                    className="mb-5 mt-5 d-flex justify-content-end"
+                                >
+                                    <a
+                                        href={route(
+                                            "oficios.downloadFilesNew",
+                                            {
+                                                id: oficio.id,
+                                                tipo: "id_oficio_inicial",
+                                            }
+                                        )}
+                                        target="_BLANK"
+                                        className="btn btn-warning btn-lg mb-1"
+                                    >
+                                        Descargar todos los archivos
+                                        adjuntos&nbsp;&nbsp;
+                                        <i className="fa fa-download"></i>
+                                    </a>
+                                </Col>
+                            </Row>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button
+                                variant="secondary"
+                                onClick={() => setShow3(false)}
+                            >
+                                Cerrar
+                            </Button>
+                        </ModalFooter>
+                    </form>
+                </Modal>
             </Fragment>
         </AppLayout>
     );

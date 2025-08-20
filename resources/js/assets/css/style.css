@@ -132,24 +132,22 @@ License        :   Licensed under ThemeForest License
 /* ######## FONT ######## */
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap");
 
-
-
- @font-face {
-    font-family: 'SourceSansPro';
-    src: url('./fonts/SourceSansPro-Regular.ttf') format('truetype');
+@font-face {
+    font-family: "SourceSansPro";
+    src: url("./fonts/SourceSansPro-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    font-family: 'SourceSansPro';
-    src: url('./fonts/SourceSansPro-Bold.ttf') format('truetype');
+    font-family: "SourceSansPro";
+    src: url("./fonts/SourceSansPro-Bold.ttf") format("truetype");
     font-weight: bold;
     font-style: normal;
 }
 
 .sun-editor-editable strong,
 .sun-editor-editable b {
-    font-family: 'SourceSansPro', Arial, sans-serif !important;
+    font-family: "SourceSansPro", Arial, sans-serif !important;
     font-weight: bold !important;
 }
 
@@ -214,61 +212,62 @@ License        :   Licensed under ThemeForest License
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace;
 }
-.text-red-600 { color: #e53e3e; }
-.text-sm { font-size: .8rem; }
+.text-red-600 {
+    color: #e53e3e;
+}
+.text-sm {
+    font-size: 0.8rem;
+}
 
 .obligatorio {
-  color: red;
+    color: red;
     display: inline;
     font-size: 12px;
     position: absolute;
 }
 
-.filaOficio .asuntoOficio table{
+.filaOficio .asuntoOficio table {
     border: 1px solid #000 !important;
     border-color: #000 !important;
     width: 100%;
 }
 
-.filaOficio .asuntoOficio table  th{
+.filaOficio .asuntoOficio table th {
     border: 1px solid #000 !important;
     border-color: #000 !important;
     padding: 4px 10px;
 }
 
-.filaOficio .asuntoOficio table  td{
+.filaOficio .asuntoOficio table td {
     border: 1px solid #000 !important;
     border-color: #000 !important;
     padding: 4px 10px;
 }
 
-
-
-
-.ancho100{
+.ancho100 {
     width: 100%;
 }
-.tag-verde{
+.tag-verde {
     background-color: #5fd710 !important;
     color: #ffffff !important;
 }
 
-.tag-amarillo{
+.tag-amarillo {
     background-color: #f5f233 !important;
     color: #000000 !important;
 }
 
-.tag-naranja{
+.tag-naranja {
     background-color: #f98200 !important;
     color: #ffffff !important;
 }
 
-.tag-rojo{
+.tag-rojo {
     background-color: #ff2d2d !important;
     color: #ffffff !important;
 }
 
-.swalSuperior{
+.swalSuperior {
     z-index: 20000 !important;
 }
 
@@ -285,24 +284,24 @@ th {
     left: 0;
     height: 67vh;
     max-height: 100%;
-    border-top: 1px solid rgba(0, 0, 0, .2);
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
     transform: translateY(100%);
 }
 
 .offcanvas-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1040;
-  width: 100vw;
-  height: 100vh;
-  background-color: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
 }
 .offcanvas-backdrop.fade {
-  opacity: 0;
+    opacity: 0;
 }
 .offcanvas-backdrop.show {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 td {
@@ -310,7 +309,6 @@ td {
     vertical-align: top;
     border-block-start: 0;
 }
-
 
 .ml-1 {
     margin-left: 1rem;
@@ -336,34 +334,46 @@ td {
     margin-right: 2rem;
 }
 
-table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order:before, table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order:before,
+table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order:before,
+table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order:before,
 table.dataTable thead > tr > td.dt-orderable-asc span.dt-column-order:before,
 table.dataTable thead > tr > td.dt-ordering-asc span.dt-column-order:before {
-  position: absolute;
-  display: block;
-  bottom: 50%;
-  content: "\25B2";
-  content: "\25B2"/"";
+    position: absolute;
+    display: block;
+    bottom: 50%;
+    content: "\25B2";
+    content: "\25B2"/"";
 }
-table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order:after, table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order:after,
+table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order:after,
+table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order:after,
 table.dataTable thead > tr > td.dt-orderable-desc span.dt-column-order:after,
 table.dataTable thead > tr > td.dt-ordering-desc span.dt-column-order:after {
-  position: absolute;
-  display: block;
-  top: 50%;
-  content: "\25BC";
-  content: "\25BC"/"";
+    position: absolute;
+    display: block;
+    top: 50%;
+    content: "\25BC";
+    content: "\25BC"/"";
 }
-table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order, table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order, table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order, table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order,
+table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order,
+table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order,
+table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order,
+table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order,
 table.dataTable thead > tr > td.dt-orderable-asc span.dt-column-order,
 table.dataTable thead > tr > td.dt-orderable-desc span.dt-column-order,
 table.dataTable thead > tr > td.dt-ordering-asc span.dt-column-order,
 table.dataTable thead > tr > td.dt-ordering-desc span.dt-column-order {
-  position: relative;
-  width: 12px;
-  height: 20px;
+    position: relative;
+    width: 12px;
+    height: 20px;
 }
-table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order:before, table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order:after, table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order:before, table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order:after, table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order:before, table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order:after, table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order:before, table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order:after,
+table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order:before,
+table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order:after,
+table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order:before,
+table.dataTable thead > tr > th.dt-orderable-desc span.dt-column-order:after,
+table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order:before,
+table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order:after,
+table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order:before,
+table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order:after,
 table.dataTable thead > tr > td.dt-orderable-asc span.dt-column-order:before,
 table.dataTable thead > tr > td.dt-orderable-asc span.dt-column-order:after,
 table.dataTable thead > tr > td.dt-orderable-desc span.dt-column-order:before,
@@ -372,31 +382,51 @@ table.dataTable thead > tr > td.dt-ordering-asc span.dt-column-order:before,
 table.dataTable thead > tr > td.dt-ordering-asc span.dt-column-order:after,
 table.dataTable thead > tr > td.dt-ordering-desc span.dt-column-order:before,
 table.dataTable thead > tr > td.dt-ordering-desc span.dt-column-order:after {
-  left: 0;
-  opacity: 0.125;
-  line-height: 9px;
-  font-size: 0.8em;
+    left: 0;
+    opacity: 0.125;
+    line-height: 9px;
+    font-size: 0.8em;
 }
-table.dataTable thead > tr > th.dt-orderable-asc, table.dataTable thead > tr > th.dt-orderable-desc,
+table.dataTable thead > tr > th.dt-orderable-asc,
+table.dataTable thead > tr > th.dt-orderable-desc,
 table.dataTable thead > tr > td.dt-orderable-asc,
 table.dataTable thead > tr > td.dt-orderable-desc {
-  cursor: pointer;
+    cursor: pointer;
 }
-table.dataTable thead > tr > th.dt-orderable-asc:hover, table.dataTable thead > tr > th.dt-orderable-desc:hover,
+table.dataTable thead > tr > th.dt-orderable-asc:hover,
+table.dataTable thead > tr > th.dt-orderable-desc:hover,
 table.dataTable thead > tr > td.dt-orderable-asc:hover,
 table.dataTable thead > tr > td.dt-orderable-desc:hover {
-  outline: 2px solid rgba(0, 0, 0, 0.05);
-  outline-offset: -2px;
+    outline: 2px solid rgba(0, 0, 0, 0.05);
+    outline-offset: -2px;
 }
-table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order:before, table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order:after,
+table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order:before,
+table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order:after,
 table.dataTable thead > tr > td.dt-ordering-asc span.dt-column-order:before,
 table.dataTable thead > tr > td.dt-ordering-desc span.dt-column-order:after {
-  opacity: 0.6;
+    opacity: 0.6;
 }
-table.dataTable thead > tr > th.sorting_desc_disabled span.dt-column-order:after, table.dataTable thead > tr > th.sorting_asc_disabled span.dt-column-order:before,
-table.dataTable thead > tr > td.sorting_desc_disabled span.dt-column-order:after,
-table.dataTable thead > tr > td.sorting_asc_disabled span.dt-column-order:before {
-  display: none;
+table.dataTable
+    thead
+    > tr
+    > th.sorting_desc_disabled
+    span.dt-column-order:after,
+table.dataTable
+    thead
+    > tr
+    > th.sorting_asc_disabled
+    span.dt-column-order:before,
+table.dataTable
+    thead
+    > tr
+    > td.sorting_desc_disabled
+    span.dt-column-order:after,
+table.dataTable
+    thead
+    > tr
+    > td.sorting_asc_disabled
+    span.dt-column-order:before {
+    display: none;
 }
 
 /*Color variables*/
@@ -1655,8 +1685,6 @@ li[role="presentation"] .nav-link {
 .dark-mode .fc-list-empty {
     background-color: #2a2a4a;
 }
-
-
 
 .dark-mode.horizontal.light-menu .horizontal-main .slide .slide-menu,
 .dark-mode.horizontal.light-menu .horizontal-main .slide .sub-slide-menu,
@@ -4825,6 +4853,14 @@ button {
 button:focus {
     outline: 0;
 }
+.dt-buttons {
+    display: none !important;
+}
+
+.sun-editor-editable,
+.sun-editor-editable * {
+    font-family: "SourceSansPro", Arial, sans-serif !important;
+}
 
 input,
 button,
@@ -4939,7 +4975,8 @@ button.btn-close:focus {
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
         border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.btn.disabled, .btn:disabled {
+.btn.disabled,
+.btn:disabled {
     color: #000000 !important;
     cursor: not-allowed !important;
     background-color: #cccccc !important;
@@ -19345,20 +19382,19 @@ ul.inbox-pagination li {
     border-inline-start: 1px solid #e9edf4;
 }
 
-.ancho40{
+.ancho40 {
     width: 40% !important;
 }
 
-.ancho50{
+.ancho50 {
     width: 50% !important;
 }
 
-
-.ancho30{
+.ancho30 {
     width: 30% !important;
 }
 
-.anchoHoja{
+.anchoHoja {
     width: 8.5in;
 }
 
@@ -20287,16 +20323,15 @@ table.table-bordered.dataTable thead tr:first-child td {
 }
 
 @media (max-width: 500px) {
-    .ancho40{
+    .ancho40 {
         width: 100% !important;
     }
 
-    .ancho50{
+    .ancho50 {
         width: 100% !important;
     }
 
-
-    .ancho30{
+    .ancho30 {
         width: 100% !important;
     }
 
@@ -20875,16 +20910,15 @@ table.table-bordered.dataTable thead tr:first-child td {
         padding: 35px 90px 35px 85px;
     }
 
-    .ancho40{
+    .ancho40 {
         width: 100% !important;
     }
 
-    .ancho50{
+    .ancho50 {
         width: 100% !important;
     }
 
-
-    .ancho30{
+    .ancho30 {
         width: 100% !important;
     }
 }
@@ -28062,8 +28096,6 @@ ul.timeline > li:before {
     vertical-align: bottom;
     font-style: normal;
 }
-
-
 
 svg {
     -ms-touch-action: none;
@@ -54679,10 +54711,10 @@ body.transparent-mode *:hover::-webkit-scrollbar-thumb {
 
 .transparent-mode .bg-recentorder {
     background: linear-gradient(
-            to right,
-            var(--transparent-body) 0%,
-            tranparent 100%
-        ),
+        to right,
+        var(--transparent-body) 0%,
+        tranparent 100%
+    );
 }
 
 .transparent-mode .bg-recentorder:before {

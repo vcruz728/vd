@@ -10,6 +10,9 @@
             margin-left: 4.5cm;
             margin-right: 2.5cm;
             margin-bottom: 2.5cm;
+
+
+            
         }
 
         @font-face {
@@ -24,7 +27,37 @@
             font-weight: 700;
             font-style: normal;
         }
+
+        @font-face {
+            font-family: 'SourceSansPro';
+            src: url('{{ public_path('fonts/SourceSansPro-Bold.ttf') }}') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
         
+        @font-face {
+            font-family: 'SourceSansPro';
+            src: url('{{ public_path('fonts/SourceSansPro-Italic.ttf') }}') format('truetype');
+            font-weight: normal;
+            font-style: italic;
+        }
+        
+
+
+        @font-face {
+            font-family: 'SourceSansPro';
+            src: url('{{ public_path('fonts/SourceSansPro-BoldItalic.ttf') }}') format('truetype');
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        @font-face {
+            font-family: 'SourceSansPro';
+            src: url('{{ public_path('fonts/SourceSansPro-BoldItalic.ttf') }}') format('truetype');
+            font-weight: bold;
+            font-style: italic;
+        }
+
 
         body {
             font-family: 'SourceSansPro', arial !important;
@@ -117,15 +150,37 @@
             pointer-events: none; /* Opcional: para que no bloquee el texto */
             
         }
+
+        table {
+        width: 100% !important;
+        table-layout: fixed !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+
+        .contenido-dinamico {
+            font-family: 'SourceSansPro', arial, sans-serif;
+            font-size: 9pt;
+            color: black;
+            line-height: 1.15;
+        }
+
+        .contenido-dinamico * {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            line-height: inherit;
+        }
+
     </style>
 </head>
 <body>
-    <img src="{{ public_path('img/minerva_gris.png') }}" class="background" />
+    <!-- <img src="{{ public_path('img/minerva_gris.png') }}" class="background" />  descomentar cuando no haya hojas membretadas -->
     <header>
-        <img src="{{ public_path('img/minver_buap_azul.png') }}" width="100" >
+        <!-- <img src="{{ public_path('img/minver_buap_azul.png') }}" width="100" >  descomentar cuando no haya hojas membretadas -->  
     </header>
     <footer>
-    <div style="width: 100%; text-align: center; font-size: 10px; color: rgb(136, 136, 136); padding: 4px 0 !important; background: rgba(255,255,255,0.8);">
+    <div style="width: 100%; text-align: center; font-size: 10px; color: rgb(136, 136, 136); padding: 4px 0 !important; background: rgba(255,255,255,0.8); display:none;"> <!-- display:none; quitar cuando no haya hojas membretadas -->
         <table style="margin: 0 auto;  width: auto;">
             <tr>
                 <td style="text-align: right; width: 90px;  vertical-align: top; padding-right: 0 !important; border: none !important; line-height: 0.8 !important;">
@@ -145,53 +200,56 @@
     </div>
 </footer>
     <div class="content">
-       <div ><p style="">Oficio No. VD-{{ $oficio?->siglas }}/{{ $respuesta?->oficio_respuesta }}/{{ date('Y') }}</p></div>
-        <br>
+    <div><p style="font-family: 'SourceSansPro'; font-style: italic; ">Oficio No. {{ $oficio?->siglas }}/{{ $respuesta?->oficio_respuesta }}/{{ date('Y') }}</p></div>
+     <br>
        <div >
             <p style="font-family: 'SourceSansPro'; font-weight: bold;">{{ $respuesta?->nombre }}</p>
-            <p style="font-family: 'SourceSansPro'; font-weight: bold;">{{ $respuesta?->cargo }}</p>
-            <p style="font-family: 'SourceSansPro'; font-weight: bold;">{{ $respuesta?->dependencia }}</p>
+            <p style="font-family: 'SourceSansPro'; font-weight: bold;">{{ $respuesta?->cargo }} {{ $respuesta?->dependencia }} de la</p>
+            <p style="font-family: 'SourceSansPro'; font-weight: bold;">Benemérita Universidad Autónoma de Puebla</p>
             <p style="font-family: 'SourceSansPro'; font-weight: bold;">PRESENTE</p>
         </div>
     <br><br>
-    <!--  contenifo -->
-
-        {!! $respuesta?->respuesta ?? '' !!}
+    <!--  contenido -->
+<div class="contenido-dinamico" style="text-align: justify;">
+    {!! $respuesta?->respuesta ?? '' !!}
+</div>
     <!--  termina contenido -->
       <br>
       <br>
       
-      <p style="font-family: 'SourceSansPro';">De antemano agradezco su atención y le reitero la seguridad de mi más distinguida consideración.</p>
+      <p style="font-family: 'SourceSansPro'; font-style: italic;">De antemano agradezco su atención y le reitero la seguridad de mi más distinguida consideración.</p>
 
 
         <br>
         <br>
         <div style="position: relative; page-break-inside: avoid;">
-            <p style="font-family: 'SourceSansPro';">Atentamente</p>
-            <p style="font-family: 'SourceSansPro';">“Pensar bien, para vivir mejor”</p>
-            <p style="font-family: 'SourceSansPro';">H. Puebla de Zaragoza a {{ $fechaEscrita }}</p>
+            <p style="font-family: 'SourceSansPro'; font-style: italic;">Atentamente</p>
+            <p style="font-family: 'SourceSansPro'; font-style: italic;">“Pensar bien, para vivir mejor”</p>
+            <p style="font-family: 'SourceSansPro'; font-style: italic;">H. Puebla de Zaragoza a {{ $fechaEscrita }}</p>
             
             <br>
             <br>
             <br>
             <br>
             
-            <p style="font-family: 'SourceSansPro';">Dr. José Jaime Vázquez López</p>
-            <p style="font-family: 'SourceSansPro';">Vicerrector de Docencia</p>
+            <p style="font-family: 'SourceSansPro'; font-style: italic;">Dr. José Jaime Vázquez López</p>
+            <p style="font-family: 'SourceSansPro'; font-style: italic;">Vicerrector de Docencia</p>
+            <!-- Descomentart si ya quieren sello y firma
             <img src="{{ public_path('img/sello.png') }}" class="sello-movil" />
             <img src="{{ public_path('img/firma.png') }}" class="firma-movil" />
+            -->
         </div>
     
 
 
     <div  style="margin-top: 20px;">
         @foreach($copias as $value)
-            <p style="font-family: 'SourceSansPro'; font-size: 10px !important;">
-                C.c.p. {{ $value->nombre }}@if($value->cargo) ,{{ $value->cargo }}@endif @if($value->dependencia) ,{{ $value->dependencia }}@endif
+            <p style="font-family: 'SourceSansPro'; font-style: italic;  font-size: 10px !important;">
+                C.c.p. {{ $value->nombre }}@if($value->cargo) , {{$value->cargo}} @endif @if($value->dependencia) {{ str_replace([' de la', ' de el', ' de los', ' de las', ' de'], '', $value->dependencia) }}@endif p.s.c.
             </p>
         @endforeach
-        <p style="font-family: 'SourceSansPro'; margin: 0px; font-size: 10px !important;">C.c.p. Archivo</p>
-        <p style="font-family: 'SourceSansPro'; margin: 0px; font-size: 10px !important;">Dr.JJVL/{{ $oficio?->area }}@if($oficio?->proceso)/{{ $oficio?->proceso }} @endif</p>
+        <p style="font-family: 'SourceSansPro';  font-style: italic; margin: 0px; font-size: 10px !important;">C.c.p. Archivo</p>
+        <p style="font-family: 'SourceSansPro';  font-style: italic; margin: 0px; font-size: 10px !important;">Dr.JJVL/{{ $oficio?->area }}@if($oficio?->proceso)/{{ $oficio?->proceso }} @endif</p>
     </div>
    
 </body>
