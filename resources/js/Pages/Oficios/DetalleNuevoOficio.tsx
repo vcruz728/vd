@@ -1,23 +1,10 @@
 import AppLayout from "../../Layouts/app";
-import { Link, router, useForm, usePage } from "@inertiajs/react";
-import { useState, Fragment, FormEventHandler } from "react";
-import {
-    Card,
-    Form,
-    Row,
-    Col,
-    Button,
-    Alert,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalTitle,
-    ModalFooter,
-} from "react-bootstrap";
+import { Link, router, useForm, usePage, Head } from "@inertiajs/react";
+import { useState, Fragment } from "react";
+import { Card, Form, Row, Col, Button } from "react-bootstrap";
 import PageHeader from "../../Layouts/layoutcomponents/pageHeader";
 import "filepond/dist/filepond.min.css";
 import VerPdf from "@/types/VerPdf";
-import { Head } from "@inertiajs/react";
 import Swal from "sweetalert2";
 import InputError from "../InputError";
 import { getFullUrl } from "../../types/url";
@@ -44,12 +31,13 @@ export default function DetalleNuevoOficio({
     const [tipo, setTipo] = useState("pdf");
 
     const verArchivo = (url: string, tipo: number, extension: string) => {
-        if (tipo == 1) {
-            setPdf(url);
+        const fullUrl = getFullUrl(url);
+        if (tipo === 1) {
+            setPdf(fullUrl);
             setTipo(extension);
             setShow(true);
         } else {
-            window.open(url, "_blank");
+            window.open(fullUrl, "_blank");
         }
     };
 
@@ -114,15 +102,17 @@ export default function DetalleNuevoOficio({
                                                         oficio.archivo.length -
                                                             3
                                                     ) !== "pdf"
-                                                        ? true
-                                                        : false
                                                 }
                                             >
                                                 <span
                                                     className="tag tag-radius tag-round tag-outline-danger"
                                                     onClick={() => {
-                                                        setPdf(oficio.archivo),
-                                                            setTipo("pdf");
+                                                        setPdf(
+                                                            getFullUrl(
+                                                                `/files/${oficio.archivo}`
+                                                            )
+                                                        );
+                                                        setTipo("pdf");
                                                         setShow(true);
                                                     }}
                                                 >
@@ -185,14 +175,16 @@ export default function DetalleNuevoOficio({
                                                             <Button
                                                                 className="btn-icon ml-1"
                                                                 variant="danger"
-                                                                title="Ver oficiosss"
+                                                                title="Ver oficio"
                                                                 onClick={() => {
                                                                     setPdf(
-                                                                        `imprime/nuevo/pdf/${id}/${row.id_usuario}/${row.tipo_usuario}`
-                                                                    ),
-                                                                        setTipo(
-                                                                            "pdf"
-                                                                        );
+                                                                        getFullUrl(
+                                                                            `/imprime/nuevo/pdf/${id}/${row.id_usuario}/${row.tipo_usuario}`
+                                                                        )
+                                                                    );
+                                                                    setTipo(
+                                                                        "pdf"
+                                                                    );
                                                                     setShow(
                                                                         true
                                                                     );
@@ -224,33 +216,29 @@ export default function DetalleNuevoOficio({
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {archivos.map((x) => {
-                                                            return (
-                                                                <tr key={x.id}>
-                                                                    <td>
-                                                                        {
-                                                                            x.nombre
+                                                        {archivos.map((x) => (
+                                                            <tr key={x.id}>
+                                                                <td>
+                                                                    {x.nombre}
+                                                                </td>
+                                                                <td>
+                                                                    <Button
+                                                                        className="btn-icon ml-1"
+                                                                        variant="danger"
+                                                                        title="Ver archivo adjunto"
+                                                                        onClick={() =>
+                                                                            verArchivo(
+                                                                                x.url,
+                                                                                x.tipo,
+                                                                                x.extension
+                                                                            )
                                                                         }
-                                                                    </td>
-                                                                    <td>
-                                                                        <Button
-                                                                            className="btn-icon ml-1"
-                                                                            variant="danger"
-                                                                            title="Ver PDF del oficio"
-                                                                            onClick={() =>
-                                                                                verArchivo(
-                                                                                    x.url,
-                                                                                    x.tipo,
-                                                                                    x.extension
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            <i className="fa fa-eye"></i>
-                                                                        </Button>
-                                                                    </td>
-                                                                </tr>
-                                                            );
-                                                        })}
+                                                                    >
+                                                                        <i className="fa fa-eye"></i>
+                                                                    </Button>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
                                                     </tbody>
                                                 </table>
                                             </Col>
