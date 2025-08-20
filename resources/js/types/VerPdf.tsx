@@ -26,13 +26,19 @@ const VerPdf = ({
         }
     });
 
-    // Si la URL ya viene con "imprime", no le agregamos "/files/"
+    // 🔹 Función para construir correctamente la URL
     const buildUrl = (url: string) => {
+        if (url.startsWith("http")) {
+            return url;
+        }
         if (url.startsWith("imprime")) {
             return getFullUrl(`/${url}`);
         }
         return getFullUrl(`/files/${url}`);
     };
+
+    const finalUrl = buildUrl(urlPdf);
+    console.log("Final PDF URL =>", finalUrl);
 
     return (
         <Offcanvas
@@ -43,7 +49,7 @@ const VerPdf = ({
         >
             <Offcanvas.Header>
                 <a
-                    href={buildUrl(urlPdf)}
+                    href={finalUrl}
                     target="_BLANK"
                     className="btn btn-danger"
                     download
@@ -54,10 +60,7 @@ const VerPdf = ({
                 <button
                     className="btn btn-primary ms-2"
                     onClick={() => {
-                        const printWindow = window.open(
-                            buildUrl(urlPdf),
-                            "_blank"
-                        );
+                        const printWindow = window.open(finalUrl, "_blank");
                         if (printWindow) {
                             printWindow.onload = function () {
                                 printWindow.focus();
@@ -68,7 +71,6 @@ const VerPdf = ({
                 >
                     Imprimir PDF
                 </button>
-
                 <Offcanvas.Title></Offcanvas.Title>
                 <span className="d-flex ms-auto" onClick={() => setShow(false)}>
                     <i className="fe fe-x ms-auto"></i>
@@ -77,14 +79,11 @@ const VerPdf = ({
             <Offcanvas.Body>
                 {tipo === "pdf" ? (
                     <Worker workerUrl={getFullUrl("/js/pdf.worker.min.js")}>
-                        <Viewer
-                            theme={{ theme: tema }}
-                            fileUrl={buildUrl(urlPdf)}
-                        />
+                        <Viewer theme={{ theme: tema }} fileUrl={finalUrl} />
                     </Worker>
                 ) : (
                     <Col className="text-center">
-                        <img src={buildUrl(urlPdf)} alt="" />
+                        <img src={finalUrl} alt="" />
                     </Col>
                 )}
             </Offcanvas.Body>
