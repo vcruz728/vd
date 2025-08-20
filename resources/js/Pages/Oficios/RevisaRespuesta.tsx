@@ -327,8 +327,12 @@ export default function FormOficio({
                                         <span
                                             className="tag tag-radius tag-round tag-outline-danger"
                                             onClick={() => {
-                                                setPdf(oficio.archivo),
-                                                    setShow(true);
+                                                setPdf(
+                                                    getFullUrl(
+                                                        `/files/${oficio.archivo}`
+                                                    )
+                                                );
+                                                setShow(true);
                                                 setTipo("pdf");
                                             }}
                                         >

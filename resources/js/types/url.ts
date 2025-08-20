@@ -58,10 +58,9 @@ export const sunEditorLangEs = {
         dir_rtl: "Derecha a izquierda",
         mention: "Mención",
     },
-
     dialogBox: {
         linkBox: {
-            title: "ítulo",
+            title: "Título",
             url: "URL",
             text: "Texto",
             newWindowCheck: "Abrir en una nueva ventana",
@@ -69,44 +68,44 @@ export const sunEditorLangEs = {
             bookmark: "Marcador",
         },
         mathBox: {
-            title: "Titulo",
+            title: "Título",
             inputLabel: "",
             fontSizeLabel: "",
             previewLabel: "",
         },
         imageBox: {
-            title: "",
-            file: "",
-            url: "",
-            altText: "",
+            title: "Imagen",
+            file: "Archivo",
+            url: "URL",
+            altText: "Texto alternativo",
         },
         videoBox: {
-            title: "",
-            file: "",
-            url: "",
+            title: "Video",
+            file: "Archivo",
+            url: "URL",
         },
         audioBox: {
-            title: "",
-            file: "",
-            url: "",
+            title: "Audio",
+            file: "Archivo",
+            url: "URL",
         },
         browser: {
-            tags: "",
-            search: "",
+            tags: "Etiquetas",
+            search: "Buscar",
         },
-        caption: "",
-        close: "",
-        submitButton: "",
-        revertButton: "",
-        proportion: "",
-        basic: "",
-        left: "",
-        right: "",
-        center: "",
-        width: "",
-        height: "",
-        size: "",
-        ratio: "",
+        caption: "Leyenda",
+        close: "Cerrar",
+        submitButton: "Aceptar",
+        revertButton: "Revertir",
+        proportion: "Proporción",
+        basic: "Básico",
+        left: "Izquierda",
+        right: "Derecha",
+        center: "Centro",
+        width: "Ancho",
+        height: "Alto",
+        size: "Tamaño",
+        ratio: "Relación",
     },
     controller: {
         edit: "Editar",
@@ -136,7 +135,6 @@ export const sunEditorLangEs = {
         HorizontalSplit: "Dividir horizontalmente",
         VerticalSplit: "Dividir verticalmente",
     },
-
     menu: {
         spaced: "Espaciado",
         bordered: "Con borde",
@@ -147,13 +145,15 @@ export const sunEditorLangEs = {
     },
 };
 
-export const appUrl = `${window.location.protocol}//procesosacademicos.buap.mx/vd/public`;
+// Detecta el protocolo (http o https) y el host dinámicamente
+export const appUrl = `${window.location.protocol}//${window.location.host}/vd/public`;
 
+// Normaliza la URL de un recurso
 export const getFullUrl = (path: string): string => {
+    if (!path) return appUrl;
     if (path.startsWith("http")) {
-        return path; // Ya es una URL completa
+        return path; // Ya es URL completa
     }
-
     const normalizedPath = path.startsWith("/") ? path : `/${path}`;
     return `${appUrl}${normalizedPath}`;
 };
