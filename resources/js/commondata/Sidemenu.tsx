@@ -1,10 +1,12 @@
+const base = import.meta.env.VITE_APP_URL;
+
 export const MENUITEMS = [
     {
         menutitle: "Oficios",
         rol: [1, 2, 3, 4, 5, 6],
         Items: [
             {
-                path: "/oficios/listado-oficio",
+                path: `${base}/oficios/listado-oficio`,
                 icon: "fa fa-folder",
                 type: "link",
                 active: false,
@@ -13,7 +15,7 @@ export const MENUITEMS = [
                 rol: [1, 2],
             },
             {
-                path: "/oficios/recepcion-oficio",
+                path: `${base}/oficios/recepcion-oficio`,
                 icon: "fa fa-plus-circle",
                 type: "link",
                 active: false,
@@ -22,7 +24,7 @@ export const MENUITEMS = [
                 rol: [1, 2],
             },
             {
-                path: "/oficios/mis-oficios",
+                path: `${base}/oficios/mis-oficios`,
                 icon: "fa fa-folder",
                 type: "link",
                 active: false,
@@ -31,7 +33,7 @@ export const MENUITEMS = [
                 rol: [1, 3, 4, 6],
             },
             {
-                path: "/oficios/respuestas",
+                path: `${base}/oficios/respuestas`,
                 icon: "fa fa-folder",
                 type: "link",
                 active: false,
@@ -40,7 +42,7 @@ export const MENUITEMS = [
                 rol: [1, 5],
             },
             {
-                path: "/oficios/nuevo-oficio/0",
+                path: `${base}/oficios/nuevo-oficio/0`,
                 icon: "fa fa-file-pdf-o",
                 type: "link",
                 active: false,
@@ -55,7 +57,7 @@ export const MENUITEMS = [
         rol: [1, 3, 4, 5],
         Items: [
             {
-                path: "/catalogos/destinatarios-externos",
+                path: `${base}/catalogos/destinatarios-externos`,
                 icon: "fa fa-group",
                 type: "link",
                 active: false,
