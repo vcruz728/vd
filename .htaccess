@@ -1,4 +1,3 @@
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteRule ^(.*)$ public/ [L]
+    RewriteEngine On RewriteCond %{HTTPS} !=on RewriteRule ^(.*)$ public/ [L]
 </IfModule>
