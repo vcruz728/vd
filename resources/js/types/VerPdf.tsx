@@ -4,13 +4,11 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import { Col, Offcanvas } from "react-bootstrap";
 import { getFullUrl } from "./url";
 import { useEffect, useState } from "react";
-import * as pdfjsLib from "pdfjs-dist";
 
 const VerPdf = ({
     urlPdf,
     show,
     setShow,
-
     tipo,
 }: {
     urlPdf: string;
@@ -26,9 +24,10 @@ const VerPdf = ({
         } else {
             setTema("light");
         }
-    });
+    }, []);
 
-    console.log(getFullUrl(`/files/${urlPdf}`));
+    // 👇 Ahora mostramos la URL final sin forzar "files/"
+    const fullUrl = getFullUrl(urlPdf);
 
     return (
         <Offcanvas
@@ -39,7 +38,7 @@ const VerPdf = ({
         >
             <Offcanvas.Header>
                 <a
-                    href={`${getFullUrl(`/files/${urlPdf}`)}`}
+                    href={fullUrl}
                     target="_BLANK"
                     className="btn btn-danger"
                     download
@@ -50,10 +49,7 @@ const VerPdf = ({
                 <button
                     className="btn btn-primary ms-2"
                     onClick={() => {
-                        const printWindow = window.open(
-                            `${getFullUrl(`/files/${urlPdf}`)}`,
-                            "_blank"
-                        );
+                        const printWindow = window.open(fullUrl, "_blank");
                         if (printWindow) {
                             printWindow.onload = function () {
                                 printWindow.focus();
@@ -72,16 +68,11 @@ const VerPdf = ({
             <Offcanvas.Body>
                 {tipo === "pdf" ? (
                     <Worker workerUrl={getFullUrl("/js/pdf.worker.min.js")}>
-                        <Viewer
-                            theme={{
-                                theme: tema,
-                            }}
-                            fileUrl={`${getFullUrl(`/files/${urlPdf}`)}`}
-                        />
+                        <Viewer theme={{ theme: tema }} fileUrl={fullUrl} />
                     </Worker>
                 ) : (
                     <Col className="text-center">
-                        <img src={`${getFullUrl(`/files/${urlPdf}`)}`} alt="" />
+                        <img src={fullUrl} alt="" />
                     </Col>
                 )}
             </Offcanvas.Body>
