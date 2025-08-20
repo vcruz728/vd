@@ -20,6 +20,7 @@ import VerPdf from "@/types/VerPdf";
 import { Head } from "@inertiajs/react";
 import Swal from "sweetalert2";
 import InputError from "../InputError";
+import { getFullUrl } from "../../types/url";
 
 type FormIn = {
     id: number;
@@ -125,13 +126,19 @@ export default function FormOficio({
         }
     };
 
+    const buildUrl = (url: string) => {
+        if (url.startsWith("http")) return url;
+        if (url.startsWith("imprime")) return getFullUrl(`/${url}`);
+        return getFullUrl(`/files/${url}`);
+    };
+
     const verArchivo = (url: string, tipo: number, extension: string) => {
         if (tipo == 1) {
-            setPdf(url);
+            setPdf(buildUrl(url));
             setShow(true);
             setTipo(extension);
         } else {
-            window.open(url, "_blank");
+            window.open(buildUrl(url), "_blank");
         }
     };
 
@@ -328,9 +335,7 @@ export default function FormOficio({
                                             className="tag tag-radius tag-round tag-outline-danger"
                                             onClick={() => {
                                                 setPdf(
-                                                    getFullUrl(
-                                                        `/files/${oficio.archivo}`
-                                                    )
+                                                    buildUrl(oficio.archivo)
                                                 );
                                                 setShow(true);
                                                 setTipo("pdf");
@@ -373,9 +378,11 @@ export default function FormOficio({
                                             className="tag tag-radius tag-round tag-outline-danger"
                                             onClick={() => {
                                                 setPdf(
-                                                    `imprime/pdf/0/${oficio.id}`
-                                                ),
-                                                    setTipo("pdf");
+                                                    buildUrl(
+                                                        `imprime/pdf/0/${oficio.id}`
+                                                    )
+                                                );
+                                                setTipo("pdf");
                                                 setShow(true);
                                             }}
                                         >
