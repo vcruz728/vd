@@ -8,8 +8,7 @@ import axios from "axios";
 window.axios = axios;
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-axios.defaults.baseURL = window.location.origin;
-
+axios.defaults.baseURL = import.meta.env.VITE_APP_URL ?? window.location.origin;
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
