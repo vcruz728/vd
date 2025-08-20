@@ -147,15 +147,13 @@ export const sunEditorLangEs = {
     },
 };
 
-export const appUrl = "http://procesosacademicos.buap.mx/vd/public";
+export const appUrl = `${window.location.protocol}//procesosacademicos.buap.mx/vd/public`;
+
 export const getFullUrl = (path: string): string => {
     if (path.startsWith("http")) {
         return path; // Ya es una URL completa
     }
 
-    // Asegurar que el path comience con /
     const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-
-    // Si appUrl ya termina con /public, usar directamente
     return `${appUrl}${normalizedPath}`;
 };

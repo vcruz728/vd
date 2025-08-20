@@ -1,1 +1,0 @@
-import{j as s}from"./app-BZjgC7cP.js";const e=({titulo:l,obligatorio:i})=>s.jsxs(s.Fragment,{children:[l,i?s.jsxs("small",{style:{display:"inline"},children:[s.jsx("p",{style:{color:"red",display:"inline"},children:"*"}),"campos obligatorios"]}):null]});export{e as T};
