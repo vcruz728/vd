@@ -71,7 +71,7 @@ const VerPdf = ({
             </Offcanvas.Header>
             <Offcanvas.Body>
                 {tipo === "pdf" ? (
-                    <Worker workerUrl={getFullUrl(`/js/pdf.worker.min.js`)}>
+                    <Worker workerUrl="https://procesosacademicos.buap.mx/vd/public/js/pdf.worker.min.js">
                         <Viewer
                             theme={{
                                 theme: tema,
