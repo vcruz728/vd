@@ -7,7 +7,11 @@ php_value post_max_size 32M
     </IfModule>
 
     RewriteEngine On
-    
+
+    # Forzar siempre HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

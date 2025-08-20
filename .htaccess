@@ -1,6 +1,3 @@
 <IfModule mod_rewrite.c>
-    RewriteEngine On # Forzar HTTPS RewriteCond %{HTTPS} off RewriteRule ^
-    https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] # Redirigir todo a public/ solo
-    si no estamos ya dentro de public RewriteCond %{REQUEST_URI} !^/public
-    RewriteRule ^(.*)$ public/$1 [L]
+    RewriteEngine On RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
